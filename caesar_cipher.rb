@@ -1,6 +1,6 @@
 require 'pry'
-puts 'Enter word: '
-word = gets.chomp
+puts 'Enter sentence: '
+sentence = gets.chomp
 puts 'Enter shift: '
 shift = gets.to_i
 
@@ -38,8 +38,8 @@ end
 
 def solve_cipher(input_array,shift)
 	output_array = []
-	input_array.each do |i|
-		pos1 = i.ord
+	input_array.each do |char|
+		pos1 = char.ord
 		pos2 = pos1 + shift
 		if pos2 < 97
 			pos3 = 123 - (97 - pos2) 
@@ -54,6 +54,11 @@ def solve_cipher(input_array,shift)
 	output_array
 end
 
-char_array = to_array_of_char(word)
-new_word = solve_cipher(char_array,shift).join
-puts new_word
+sentence_array = sentence.split(' ')
+
+sentence_array.each do |word|
+	char_array = to_array_of_char(word)
+	new_word = solve_cipher(char_array,shift).join
+	puts new_word
+end
+
