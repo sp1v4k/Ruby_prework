@@ -12,6 +12,7 @@ class ShakeShop
 	def list_milkshake
 		@milkshakes.each do |i|
 			puts i.milkshake_name
+			print i.ingredients
 		end	
 	end
 end
@@ -48,26 +49,54 @@ class Ingredient
 	end
 end
 
-in_gredient = nil
-sp1v4k_shop = ShakeShop.new
-puts "Milkshake name? "
-m_name = gets.chomp
-m_shake = MilkShake.new(m_name)
-i_name = nil
-until i_name == "stop" do 
-	puts "Add ingredient (type 'stop' for no more ingredients): "
-	i_name = gets.chomp
-	if i_name != "stop"
-		puts "Price of ingredient? "
-		i_price = gets.to_i
-		in_gredient = Ingredient.new(i_name, i_price)
-		m_shake.add_ingredient(in_gredient)
-	end
+
+def print_option_menu
+	puts "Welcome to sp1v4k Shake Shop!!!"
+	puts "Chosse an option:\n"
+	puts "1 - Add new shake"
+	puts "2 - List all Milkshakes"
+	puts "3 - Exit"
 end
 
-sp1v4k_shop.add_milkshake(m_shake)
-puts m_shake.price_of_milkshake
-puts sp1v4k_shop.list_milkshake
+sp1v4k_shop = ShakeShop.new
+
+
+print_option_menu
+
+m_shake = nil    #Initialize local variables for object MilkShake class creation  
+m_name = nil
+option = nil
+
+until option == "3" do
+	option = gets.chomp
+	if option == "1"
+		until m_name == "stop" do
+			i_name = nil 	#reset var to enter in ingredient loop	
+			puts "Milkshake name (type 'stop' for no more Mikshakes additions)? "
+			m_name = gets.chomp
+			if m_name != "stop"
+				m_shake = MilkShake.new(m_name)
+				until i_name == "stop" do 
+					puts "Add ingredient (type 'stop' for no more ingredients): "
+					i_name = gets.chomp
+					if i_name != "stop"
+						puts "Price of ingredient? "
+						i_price = gets.to_i
+						in_gredient = Ingredient.new(i_name, i_price)
+						m_shake.add_ingredient(in_gredient)
+					end
+				end
+				sp1v4k_shop.add_milkshake(m_shake)
+			end	
+		end	
+	
+	elsif option == "2"
+		puts sp1v4k_shop.list_milkshake
+	elsif option == "3"
+		puts "Thanks for using sp1v4k Shake Shop Management Software"	
+	end
+end
+#puts m_shake.price_of_milkshake
 
 #	binding.pry
 
